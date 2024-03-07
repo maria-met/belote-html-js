@@ -10,25 +10,29 @@
 
 <body>
 
-  <img src="logo2.png" alt="Your Logo" class="logo">
+  <img src="logo3.png" alt="Your Logo" class="logo">
   <img src="copassa.png" alt="Your Logo" class="logo2">
   <!--<iframe src="http://localhost:8501/" width="100%" height="400px" frameborder="0"></iframe>-->
   <div class="container">
-    <div class="player top">
-      <img src="cards.jpg" alt="Top Card" class="card-image">
+    <div class="top">
+      <ul>
+        <li><div  alt="Top Card" class="card" id="clickable"></div></li>
+        <li><div  alt="Top Card" class="card" id="clickable"></div></li>
+        <li><div  alt="Top Card" class="card" id="clickable"></div></li>
+        <li><div  alt="Top Card" class="card" id="clickable"></div></li>
+        <li><div  alt="Top Card" class="card" id="clickable"></div></li>
+    </ul>
     </div>
-    <div class="player left">
-      <img src="cards.jpg" alt="Top Card" class="card-image">
+    <div class="leftPlayer">
+
     </div>
-    <div id="tablecard" class="table_card center">
-      <img  alt="Top Card" class="table-card">
+    <div id="clickable" class="table_card ">
     </div>
-    <div class="player right">
-      <img src="cards.jpg" alt="Top Card" class="card-image">
+    <div class="rightPlayer">
+
     </div>
-    <div class="player bottom"> <!--{% for card_name in card_names %}-->
-      <img src="cards.jpg" alt="Top Card" class="card-image"><!--<img src="{{ card_images[card_name] }}" alt="{{ card_name }}"-->
-      <!--{% endfor %}-->
+    <div class="bottomPlayer">
+
     </div>
 
   </div>
@@ -63,6 +67,19 @@
 
   }
 
+  ul {
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+  }
+  li .card {
+    grid-column: 1 / 5;
+    grid-row: 1;
+    width: 70px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+
+  }
   .logo2 {
     position: absolute;
     top: 20px; /* Adjust the top position as needed */
@@ -97,13 +114,13 @@
     font-size: 16px;
     font-family: "Lucida Grande", "Arial", sans-serif;
     position : absolute;
-    width: 760px;
-    left: 50%;
+    width: 340px;
+    right: 10%;
   }
 
   .camera {
     width: 340px;
-    display: inline-block;
+    /* display: inline-block; */
   }
 
   #video {
@@ -111,6 +128,7 @@
     box-shadow: 2px 2px 3px black;
     width: 320px;
     height: 240px;
+
   }
 
   #photo {
@@ -159,17 +177,9 @@
 
 
 
-  .player {
-    margin-top: 70px;
-    position: absolute;
-    width: 70px; /* Adjust as needed */
-    height: 220px; /* Adjust as needed */
-    /*background-color: #f0f0f0;*/
-
-  }
 
   .table_card {
-    position: absolute;
+    /* position: absolute; */
     width: 70px; /* Adjust as needed */
     height: 100px; /* Adjust as needed */
     top: 45%;
@@ -178,45 +188,38 @@
     transform: translateX(-50%);
     background-image: url('card_back.jpg');
     transform-origin: bottom left;
+    width: 62px; /* Adjust the width of the logo */
+    height: 100px;
+    margin-left: 52%;
   }
 
-  .table-card {
-    position: absolute;
-     /* Adjust the top position as needed */
-     /* Adjust the left position as needed */
-    width: 70px; /* Adjust the width of the logo */
-    height: 100px; /* Maintain aspect ratio */
-    z-index: 1000; /* Ensure the logo appears above other content */
-  }
 
 
   .top {
-    top: 0;
-    left: 50%;
-    transform: translateY(-50%) rotate(-90deg);
-
+    margin-top: 200px;
   }
 
-  .left {
-    top: 20%;
-    left: 20%;
+  .leftPlayer {
     transform: translateX(-50%);
-
+    background-image: url('cards_back.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
     transform-origin: bottom left;
   }
 
-  .right {
-    top: 20%;
-    right: -5%;
+  .rightPlayer {
     transform: translateX(-50%);
     transform-origin: bottom right;
+    background-image: url('cards_back.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
-  .bottom {
-   margin-bottom: -190px;
-    bottom: 0;
-    left: 50%;
+  .bottomPlayer {
     transform: translateY(-40%) rotate(-90deg);
+    background-image: url('cards_back.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
   .card-image {
@@ -228,6 +231,12 @@
    top: 50%;
    left: 50%;
    transform: translate(-50%, -50%) rotate(-90deg); /* Rotate 90 degrees counterclockwise */
+  }
+
+  #clickable {
+    background-image: url('card_back.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
 </style>
@@ -246,6 +255,9 @@
     let photo = null;
     let startbutton = null;
     let tablecard = null;
+    const clickables = document.querySelectorAll('#clickable')
+
+
 
     function showViewLiveResultButton() {
       if (window.self !== window.top) {
@@ -267,7 +279,8 @@
       canvas = document.getElementById("canvas");
       photo = document.getElementById("photo");
       startbutton = document.getElementById("startbutton");
-      tablecard = document.getElementById("tablecard");
+
+      // tablecard = document.getElementById("tablecard");
 
       navigator.mediaDevices
         .getUserMedia({ video: true, audio: false })
@@ -299,19 +312,20 @@
         },
         false,
       );
-
-      document.addEventListener(
-        "keyup",
+      clickables.forEach(clickable => {
+      clickable.addEventListener(
+        "click",
         (ev) => {
-          if (ev.code === "Space" || ev.keyCode === 32) {
-            takepicture();
+
+            takepicture(clickable);
             ev.preventDefault()
-          }
+
         },
         false,
       );
 
       clearphoto();
+    })
     }
 
     function clearphoto() {
@@ -322,7 +336,7 @@
       const data = canvas.toDataURL("image/png");
       photo.setAttribute("src", data);
     }
-    function takepicture() {
+    function takepicture(clickable) {
       const context = canvas.getContext("2d");
       if (width && height) {
         canvas.width = width;
@@ -344,9 +358,11 @@
         .then(response => response.text())
         .then(data => {
           // Update the content of the tablecard element with the response from the API
+          console.log(data)
+          // var tablecard = document.getElementById('tablecard');
+          // Find the existing image element inside the container
+          clickable.style.backgroundImage = `url("${data.replaceAll('"', '')}.jpg")`;
 
-          console.log(`url('${data.replaceAll('"', '')}.jpg');`);
-          document.getElementById('tablecard').style.backgroundImage = `url("${data.replaceAll('"', '')}.jpg")`;
 
         })
         .catch(error => {
