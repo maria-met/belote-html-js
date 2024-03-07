@@ -245,6 +245,7 @@
         .then(data => {
           // Update the content of the tablecard element with the response from the API
 
+
           console.log(`url('${data.replaceAll('"', '')}.jpg');`);
           document.getElementById('tablecard').style.backgroundImage = `url("${data.replaceAll('"', '')}.jpg")`;
 
