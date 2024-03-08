@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--<link rel="stylesheet" href="./style.css">-->
+    <title>Card Game Layout</title>
+</head>
+
+<body>
+
+    <img src="logo3.png" alt="Your Logo" class="logo">
+    <img src="copassa.png" alt="Your Logo" class="logo2">
+    <!--<iframe src="http://localhost:8501/" width="100%" height="400px" frameborder="0"></iframe>-->
+    <div class="container">
+        <div class="top">
+            <div class="player-img">
+                <img src="player-img.png" alt="" class="player-image">
+            </div>
+            <ul>
+                <li>
+                    <div alt="Top Card" class="card" id="clickable"></div>
+                </li>
+                <li>
+                    <div alt="Top Card" class="card" id="clickable"></div>
+                </li>
+                <li>
+                    <div alt="Top Card" class="card" id="clickable"></div>
+                </li>
+                <li>
+                    <div alt="Top Card" class="card" id="clickable"></div>
+                </li>
+                <li>
+                    <div alt="Top Card" class="card" id="clickable"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="leftPlayer">
+
+        </div>
+        <div id="clickable" class="table_card ">
+        </div>
+        <div class="rightPlayer">
+
+        </div>
+        <div class="bottomPlayer">
+        </div>
+
+    </div>
+
+    <div class="contentarea">
+
+        <div class="camera">
+            <video id="video">Video stream not available.</video>
+
+        </div>
+        <canvas id="canvas"> </canvas>
+        <div class="output">
+            <img id="photo" alt="The screen capture will appear in this box." />
+            <button id="startbutton">Submit</button>
+        </div>
+
+    </div>
+
+</body>
+<style>
+    body {
+        background-image: url('bg2.jpg');
+        /* Replace 'background_image.jpg' with the path to your image */
+        background-size: cover;
+        /* Cover the entire background */
+        background-position: center;
+        /* Center the background */
+        /* background-color: #15572a;*/
+        margin: 0;
+        padding: 0;
+        /*font-family: Arial, sans-serif;*/
+    }
+
+    .player-image {
+        position: absolute;
+        top: -17%;
+        left: 45%;
+        width: 55px;
+        /*height: 60px;*/
+    }
+
+    ul {
+        list-style-type: none;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        /*grid-gap: 10px;*/
+    }
+
+    li .card {
+        margin-top: 10%;
+        grid-column: 1 / 5;
+        grid-row: 1;
+        width: 70px;
+        /* Adjust as needed */
+        height: 100px;
+        /* Adjust as needed */
+    }
+
+    .logo2 {
+        position: absolute;
+        top: 20px;
+        /* Adjust the top position as needed */
+        left: 1250px;
+        /* Adjust the left position as needed */
+        width: 80px;
+        /* Adjust the width of the logo */
+        height: auto;
+        /* Maintain aspect ratio */
+        z-index: 1000;
+        /* Ensure the logo appears above other content */
+    }
+
+    .logo {
+        position: absolute;
+        top: 10px;
+        /* Adjust the top position as needed */
+        left: 20px;
+        /* Adjust the left position as needed */
+        width: 200px;
+        /* Adjust the width of the logo */
+        height: auto;
+        /* Maintain aspect ratio */
+        z-index: 1000;
+        /* Ensure the logo appears above other content */
+    }
+
+    .container {
+        position: relative;
+        margin-top: 40px;
+        width: 500px;
+        height: 500px;
+        top: 50%;
+        /*left: 10%;*/
+        left: 15%;
+    }
+
+    .contentarea {
+        top: 17%;
+        font-size: 16px;
+        font-family: "Lucida Grande", "Arial", sans-serif;
+        position: absolute;
+        width: 340px;
+        right: 13%;
+    }
+
+    .camera {
+        width: 340px;
+        /* display: inline-block; */
+    }
+
+    #video {
+        border: 1px solid black;
+        box-shadow: 2px 2px 3px black;
+        width: 320px;
+        height: 240px;
+    }
+
+    #photo {
+        border: 1px solid black;
+        box-shadow: 2px 2px 3px black;
+        width: 320px;
+        height: 240px;
+    }
+
+    #canvas {
+        display: none;
+    }
+
+    #startbutton {
+        display: block;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        bottom: 32px;
+        background-color: rgb(0 150 0 / 50%);
+        border: 1px solid rgb(255 255 255 / 70%);
+        box-shadow: 0px 0px 1px 2px rgb(0 0 0 / 20%);
+        font-size: 14px;
+        font-family: "Lucida Grande", "Arial", sans-serif;
+        color: rgb(255 255 255 / 100%);
+    }
+
+    .output {
+        width: 340px;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    #camera-section {
+        position: relative;
+        z-index: 1;
+    }
+
+    #image-section {
+        position: relative;
+        z-index: 2;
+    }
+
+    .table_card {
+        position: absolute;
+        width: 70px;
+        /* Adjust as needed */
+        height: 100px;
+        /* Adjust as needed */
+        /*top: 45%;*/
+        top: 30%;
+        /*left: 56%;*/
+        background-color: #f0f0f0;
+        transform: translateX(-50%);
+        background-image: url('card_back.jpg');
+        transform-origin: bottom left;
+        width: 62px;
+        /* Adjust the width of the logo */
+        height: 100px;
+        margin-left: 52%;
+    }
+
+    .top {
+        margin-top: 160px;
+    }
+
+    .leftPlayer {
+        transform: translateX(-50%);
+        background-image: url('cards_back.jpg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        transform-origin: bottom left;
+    }
+
+    .rightPlayer {
+        transform: translateX(-50%);
+        transform-origin: bottom right;
+        background-image: url('cards_back.jpg');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .bottomPlayer {
+        /* transform: translateY(-40%) rotate(-90deg); */
+        background-image: url('cards_back.jpg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 450px;
+        /* Adjust width as needed */
+        height: 110px;
+        /* Adjust height as needed */
+        /* margin-top: 20px;*/
+        margin-top: 50px;
+        margin-left: 140px;
+        /**/
+        position: absolute;
+        bottom: 15%;
+    }
+
+    .card-image {
+        position: absolute;
+        border: 1px solid #ccc;
+        width: 200px;
+        /* Adjust as needed */
+        height: auto;
+        /* Maintain aspect ratio */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-90deg);
+        /* Rotate 90 degrees counterclockwise */
+    }
+
+    #clickable {
+        background-image: url('card_back.jpg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-top: 5px;
+    }
+</style>
+
+
+
+
+<script>
+    (() => {
+
+        const width = 320;
+        let height = 0;
+        let streaming = false;
+        let video = null;
+        let canvas = null;
+        let photo = null;
+        let startbutton = null;
+        let tablecard = null;
+        const clickables = document.querySelectorAll('#clickable')
+
+
+
+        function showViewLiveResultButton() {
+            if (window.self !== window.top) {
+                document.querySelector(".contentarea").remove();
+                const button = document.createElement("button");
+                button.textContent = "View live result of the example code above";
+                document.body.append(button);
+                button.addEventListener("click", () => window.open(location.href));
+                return true;
+            }
+            return false;
+        }
+
+        function startup() {
+            if (showViewLiveResultButton()) {
+                return;
+            }
+            video = document.getElementById("video");
+            canvas = document.getElementById("canvas");
+            photo = document.getElementById("photo");
+            startbutton = document.getElementById("startbutton");
+
+            // tablecard = document.getElementById("tablecard");
+
+            navigator.mediaDevices
+                .getUserMedia({
+                    video: true,
+                    audio: false
+                })
+                .then((stream) => {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch((err) => {
+                    console.error(`An error occurred: ${err}`);
+                });
+
+            video.addEventListener(
+                "canplay",
+                (ev) => {
+                    if (!streaming) {
+                        height = video.videoHeight / (video.videoWidth / width);
+
+
+                        if (isNaN(height)) {
+                            height = width / (4 / 3);
+                        }
+
+                        video.setAttribute("width", width);
+                        video.setAttribute("height", height);
+                        canvas.setAttribute("width", width);
+                        canvas.setAttribute("height", height);
+                        streaming = true;
+                    }
+                },
+                false,
+            );
+            clickables.forEach(clickable => {
+                clickable.addEventListener(
+                    "click",
+                    (ev) => {
+
+                        takepicture(clickable);
+                        ev.preventDefault()
+
+                    },
+                    false,
+                );
+
+                clearphoto();
+            })
+        }
+
+        function clearphoto() {
+            const context = canvas.getContext("2d");
+            context.fillStyle = "#AAA";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            const data = canvas.toDataURL("image/png");
+            photo.setAttribute("src", data);
+        }
+
+        function takepicture(clickable) {
+            const context = canvas.getContext("2d");
+            if (width && height) {
+                canvas.width = width;
+                canvas.height = height;
+                context.drawImage(video, 0, 0, width, height);
+
+                const data = canvas.toDataURL("image/png");
+                photo.setAttribute("src", data);
+
+                // Create a FormData object
+                const formData = new FormData();
+                formData.append('img', dataURLtoFile(data, 'image.png')); // Convert data URI to File object
+
+                // Send a POST request to the API endpoint
+                fetch('https://beloteapi-bs43vffbua-ew.a.run.app/detect_card', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        // Update the content of the tablecard element with the response from the API
+                        console.log(data)
+                            // var tablecard = document.getElementById('tablecard');
+                            // Find the existing image element inside the container
+                        clickable.style.backgroundImage = `url("${data.replaceAll('"', '')}.jpg")`;
+
+
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                clearphoto();
+            }
+        }
+
+        // Function to convert Data URI to File object
+        function dataURLtoFile(dataUrl, filename) {
+            const arr = dataUrl.split(',');
+            const mime = arr[0].match(/:(.*?);/)[1];
+            const bstr = atob(arr[1]);
+            let n = bstr.length;
+            const u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, {
+                type: mime
+            });
+        }
+
+        // Set up our event listener to run the startup process
+        // once loading is complete.
+        window.addEventListener("load", startup, false);
+    })();
+</script>
